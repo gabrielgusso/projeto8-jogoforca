@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+
+*{
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: rgb(92, 92, 92);
+}
+
+main {
+    margin: auto;
+    width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.container {
+    display: flex;
+    width: 900px;
+}
+
+.container img {
+    width: 450px;
+    margin-left: 100px;
+
+}
+
+.container button {
+    background-color: rgb(11, 168, 11);
+    color: white;
+    cursor: pointer;
+    border: none;
+    height: 50px;
+    width: 170px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 35px;
+    margin-left: 100px;
+}
+
+.letterBox {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+}
+
+.color0 {
+    color: #79818A;
+    background-color: #9FAAB5;
+}
+
+.color1 {
+    color: #3973B3;
+    background-color: #C2DFF4;
+    border: 1px solid #3973B3;
+}
+
+.allLetters {
+    width: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-left: 60px;
+}
+
+main input {
+    border-radius: 5px;
+    width: 350px;
+    height: 35px;
+    outline: none;
+    border: 1px solid gray;
+}
+
+.answer {
+    margin-top: 30px;
+    display: flex;
+    width: 650px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.answer button {
+    height: 40px;
+    width: 65px;
+    background-color: #C2DFF4;
+    color: #3973B3;
+    border: 1px solid #3973B3;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.buttonDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 80px;
+    font-size: 40px;
+}
+
+.buttonDiv p {
+    margin-left: 40px;
+}
