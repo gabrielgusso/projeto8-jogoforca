@@ -14,28 +14,33 @@ function Main() {
   const [arrUnderline, setArrUnd] = useState([])
   const newArr = [...arrUnderline]
   const [arrNotClicked, setArrNotClicked] = useState([])
-  const map = [forca0, forca1,forca2,forca3,forca4,forca5,forca6]
-  const [indice, setIndice] = useState(0)
+  const map = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
+  const [indexForca, setindexForca] = useState(0)
+  const [color, setColor] = useState("")
+  const [chute, setChute] = useState("")
+  const [palavraSemAcento, setPalvaraSemAcento] = useState("")
+  //const [disable, setDiseble] = useState(true)
+
+
   function Letters(props) {
     return (
       <button
         disabled={arrNotClicked.includes(props.element) ? false : true}
         className={`letterBox ${
-          arrNotClicked.includes(props.element) ? "color1" : "color0"
-        } `}
+          arrNotClicked.includes(props.element) ? "color1" : "color0"} `}
         onClick={() => {
-          const verifyIfExistsVar = arrWord.map((e, index) =>
-            props.element === e
-            ? (setArrUnd(LetterInUnd(props.element, index)), false)
-            : true//(arrClicked.includes(props.element) ? null : setArrCliked([...arrClicked, props.element]), console.log(arrClicked))//(setIndice(indice + 1), console.log(`errou${indice}`))
+          const verifyIfExistsVar = arrWord.map(
+            (e, index) =>
+              props.element === e
+                ? (setArrUnd(LetterInUnd(props.element, index)), false)
+                : true
           )
           const NewArrNotClicked = arrNotClicked.filter(
             (e) => e !== props.element
           )
           setArrNotClicked(NewArrNotClicked)
-          console.log(NewArrNotClicked)
           verifyIfExists(verifyIfExistsVar)
-          console.log(verifyIfExistsVar)
+          loseWinGame()
         }}
       >
         {props.element}
@@ -44,19 +49,28 @@ function Main() {
   }
 
   function verifyIfExists(arr) {
-    if(arr.every(Boolean)){
-      setIndice(indice + 1)
+    if (arr.every(Boolean)) {
+      setindexForca(indexForca + 1)
+    }
+  }
+
+  function loseWinGame() {
+    if (indexForca === 5) {
+      setColor("colorRed")
+      setArrUnd(arrWord)
+    }
+    if (!newArr.includes("_")) {
+      setColor("colorGreen")
+      setArrNotClicked([])
     }
   }
 
   function LetterInUnd(e, index) {
-    console.log(index)
     for (let i = 0; i < arrUnderline.length; i++) {
       if (i === index) {
         newArr[i] = e
       }
     }
-    console.log(newArr)
     return newArr
   }
 
@@ -73,27 +87,44 @@ function Main() {
     return arrUnderline
   }
 
+  function chutar(){
+    const chuteCaixaAlta = chute.toUpperCase()
+    if(chuteCaixaAlta === palavraSemAcento || chuteCaixaAlta === palavras[0]){
+      console.log('ACERTOU O CHUTE')
+      setColor("colorGreen")
+      setArrUnd(chuteCaixaAlta)
+      setArrNotClicked([])     
+    } else {
+      setindexForca(6)
+      setColor("colorRed")
+      setArrUnd(palavraSemAcento)
+    }
+    setChute("")
+  }
+
   return (
     <main>
       <div className="container">
-        <img src={map[indice]} alt="forca" />
+        <img src={map[indexForca]} alt="forca" />
         <div className="buttonDiv">
           <button
             onClick={() => {
               palavras.sort(comparador)
-              const caracter = palavras[0]
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "", "ç", "c")
+              const novaPalavra = palavras[0]
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "", "ç", "c")
+              setPalvaraSemAcento(novaPalavra)
               console.log(palavras[0])
+              setColor("")
+              setindexForca(0)
               setArrNotClicked([...alfabeto])
-              arrWord = [...caracter]
-              console.log(arrWord)
+              arrWord = [...novaPalavra]
               setArrUnd(changeUnderline)
             }}
           >
             Escolher Palavra
           </button>
-          <p>{arrUnderline}</p>
+          <p className={color}>{arrUnderline}</p>
         </div>
       </div>
       <div className="allLetters">
@@ -103,8 +134,11 @@ function Main() {
       </div>
       <div className="answer">
         <p>Já sei a palavra!</p>
-        <input type="text" />
-        <button>Chutar</button>
+        <input type="text"
+        value={chute}
+        onChange={(e) => setChute(e.target.value)} 
+        />
+        <button onClick={chutar}>Chutar</button>
       </div>
     </main>
   )
