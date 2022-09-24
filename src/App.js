@@ -19,12 +19,11 @@ function Main() {
   const [color, setColor] = useState("")
   const [chute, setChute] = useState("")
   const [palavraSemAcento, setPalvaraSemAcento] = useState("")
-  //const [disable, setDiseble] = useState(true)
-
 
   function Letters(props) {
     return (
       <button
+        data-identifier="letter"
         disabled={arrNotClicked.includes(props.element) ? false : true}
         className={`letterBox ${
           arrNotClicked.includes(props.element) ? "color1" : "color0"} `}
@@ -90,7 +89,6 @@ function Main() {
   function chutar(){
     const chuteCaixaAlta = chute.toUpperCase()
     if(chuteCaixaAlta === palavraSemAcento || chuteCaixaAlta === palavras[0]){
-      console.log('ACERTOU O CHUTE')
       setColor("colorGreen")
       setArrUnd(chuteCaixaAlta)
       setArrNotClicked([])     
@@ -105,16 +103,18 @@ function Main() {
   return (
     <main>
       <div className="container">
-        <img src={map[indexForca]} alt="forca" />
+        <img 
+        data-identifier="game-image"
+        src={map[indexForca]} alt="forca" />
         <div className="buttonDiv">
           <button
+            data-identifier="choose-word"
             onClick={() => {
               palavras.sort(comparador)
               const novaPalavra = palavras[0]
               .normalize("NFD")
               .replace(/[\u0300-\u036f]/g, "", "ç", "c")
               setPalvaraSemAcento(novaPalavra)
-              console.log(palavras[0])
               setColor("")
               setindexForca(0)
               setArrNotClicked([...alfabeto])
@@ -124,7 +124,9 @@ function Main() {
           >
             Escolher Palavra
           </button>
-          <p className={color}>{arrUnderline}</p>
+          <p 
+          data-identifier="word"
+          className={color}>{arrUnderline}</p>
         </div>
       </div>
       <div className="allLetters">
@@ -134,11 +136,16 @@ function Main() {
       </div>
       <div className="answer">
         <p>Já sei a palavra!</p>
-        <input type="text"
+        <input 
+        data-identifier="type-guess"
+        type="text"
         value={chute}
         onChange={(e) => setChute(e.target.value)} 
         />
-        <button onClick={chutar}>Chutar</button>
+        <button 
+        data-identifier="guess-button"
+        onClick={chutar}
+        >Chutar</button>
       </div>
     </main>
   )
