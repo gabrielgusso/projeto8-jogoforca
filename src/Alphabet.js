@@ -1,4 +1,4 @@
-const alfabetoLower = [
+const alphabetLowerCase = [
     "a",
     "b",
     "c",
@@ -27,6 +27,6 @@ const alfabetoLower = [
     "z",
   ]
 
-  const alfabeto = alfabetoLower.map(e => e.toUpperCase())
+  const alphabet = alphabetLowerCase.map(e => e.toUpperCase())
 
-  export default alfabeto
+  export default alphabet

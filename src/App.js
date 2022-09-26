@@ -8,19 +8,19 @@ import forca3 from "./assets/forca3.png"
 import forca4 from "./assets/forca4.png"
 import forca5 from "./assets/forca5.png"
 import forca6 from "./assets/forca6.png"
-import palavras from "./Palavras.js"
-import alfabeto from "./Alfabeto.js"
+import words from "./Words.js"
+import alphabet from "./Alphabet.js"
 let arrWord
 
 function Main() {
   const [arrUnderline, setArrUnd] = useState([])
   const newArr = [...arrUnderline]
   const [arrNotClicked, setArrNotClicked] = useState([])
-  const map = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
+  const mapImg = [forca0, forca1, forca2, forca3, forca4, forca5, forca6]
   const [indexForca, setindexForca] = useState(0)
   const [color, setColor] = useState("")
-  const [chute, setChute] = useState("")
-  const [palavraSemAcento, setPalvaraSemAcento] = useState("")
+  const [guess, setGuess] = useState("")
+  const [wordWithoutAccent, setwordWithoutGuess] = useState("")
 
   function Letters(props) {
     return (
@@ -39,7 +39,7 @@ function Main() {
           )
           setArrNotClicked(NewArrNotClicked)
           verifyIfExists(verifyIfExistsVar)
-          loseWinGame()
+          loseOrWinGame()
         }}
       >
         {props.element}
@@ -53,10 +53,11 @@ function Main() {
     }
   }
 
-  function loseWinGame() {
+  function loseOrWinGame() {
     if (indexForca === 5) {
       setColor("red")
       setArrUnd(arrWord)
+      setArrNotClicked([])
     }
     if (!newArr.includes("_")) {
       setColor("rgb(11, 168, 11)")
@@ -73,31 +74,31 @@ function Main() {
     return newArr
   }
 
-  function comparador() {
+  function sortWord() {
     return Math.random() - 0.5
   }
 
   function changeUnderline() {
     let underline = ""
-    for (let i = 0; i < palavras[0].length; i++) {
+    for (let i = 0; i < words[0].length; i++) {
       underline += "_"
     }
     setArrUnd([...underline])
     return arrUnderline
   }
 
-  function chutar() {
-    const chuteCaixaAlta = chute.toUpperCase()
-    if (chuteCaixaAlta === palavraSemAcento || chuteCaixaAlta === palavras[0]) {
+  function guessTheWord() {
+    const guessCapsLock = guess.toUpperCase()
+    if (guessCapsLock === wordWithoutAccent || guessCapsLock === words[0]) {
       setColor("rgb(11, 168, 11)")
-      setArrUnd(chuteCaixaAlta)
+      setArrUnd(guessCapsLock)
       setArrNotClicked([])
     } else {
       setindexForca(6)
       setColor("red")
-      setArrUnd(palavraSemAcento)
+      setArrUnd(wordWithoutAccent)
     }
-    setChute("")
+    setGuess("")
   }
 
   return (
@@ -106,19 +107,19 @@ function Main() {
     <Container>
     <GlobalStyle />
       <Forca>
-        <img data-identifier="game-image" src={map[indexForca]} alt="forca" />
+        <img data-identifier="game-image" src={mapImg[indexForca]} alt="forca" />
         <ButtonDiv color={color}>
           <button
             data-identifier="choose-word"
             onClick={() => {
-              palavras.sort(comparador)
-              const novaPalavra = palavras[0]
+              words.sort(sortWord)
+              const novaPalavra = words[0]
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "", "ç", "c")
-              setPalvaraSemAcento(novaPalavra)
+              setwordWithoutGuess(novaPalavra)
               setColor("")
               setindexForca(0)
-              setArrNotClicked([...alfabeto])
+              setArrNotClicked([...alphabet])
               arrWord = [...novaPalavra]
               setArrUnd(changeUnderline)
             }}
@@ -131,7 +132,7 @@ function Main() {
         </ButtonDiv>
       </Forca>
       <AllLetters>
-        {alfabeto.map((e, index) => (
+        {alphabet.map((e, index) => (
           <Letters key={index} element={e} index={index} />
         ))}
       </AllLetters>
@@ -140,10 +141,10 @@ function Main() {
         <input
           data-identifier="type-guess"
           type="text"
-          value={chute}
-          onChange={(e) => setChute(e.target.value)}
+          value={guess}
+          onChange={(e) => setGuess(e.target.value)}
         />
-        <button data-identifier="guess-button" onClick={chutar}>
+        <button data-identifier="guess-button" onClick={guessTheWord}>
           Chutar
         </button>
       </Asnwer>

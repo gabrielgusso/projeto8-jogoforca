@@ -1,4 +1,4 @@
-const palavrasLower = [
+const wordsLowerCase = [
     "abacate", "abacaxi", "abelha", "abanador", "antologia", "amor", "aba", "abraço", "ábaco", "abrigo", "abrir", 
     "banana", "boi", "batata", "bacalhau", "bexiga", "bowl", "batedeira", "bisturi", "barreira", "banco", 
     "caixa", "chantilly", "comércio", "cachorro", "cuidado", "caneta", "carinho", "cupuaçu", "cabra", "cesto", 
@@ -24,6 +24,6 @@ const palavrasLower = [
     "zebra", "zagueiro", "zero", "zoeira", "zodíaco", "zangão", "zepelim", "zinco", "zoológico", "zumbido"
 ]
 
-const palavras = palavrasLower.map(e => e.toUpperCase())
+const words = wordsLowerCase.map(e => e.toUpperCase())
 
-export default palavras
+export default words
